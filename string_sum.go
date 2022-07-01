@@ -16,6 +16,7 @@ var (
 	errorNotTwoOperands = errors.New("expecting two operands, but received more or less")
 )
 
+//
 // Implement a function that computes the sum of two int numbers written as a string
 // For example, having an input s3ile
 
@@ -48,8 +49,16 @@ func StringSum(input string) (output string, err error) {
 }
 
 func isNotNum(s string) bool {
+	var count int
 	for _, val := range s {
-		if val < '0' || val > '9' || val != '+' || val != '-' {
+		if val == '+' || val == '-' {
+			count++
+			continue
+		}
+		if count > 2 {
+			return false
+		}
+		if val < '0' || val > '9' {
 			return false
 		}
 	}
