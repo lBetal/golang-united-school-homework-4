@@ -22,24 +22,36 @@ var (
 func StringSum(input string) (output string, err error) {
 	input = strings.ReplaceAll(input, " ", "")
 	if input == "" {
-		return "", fmt.Errorf("Empty input: %w", errorEmptyInput)
+		return "", fmt.Errorf("empty input: %w", errorEmptyInput)
+	}
+	if !isNotNum(input) {
+		return "", fmt.Errorf("input have any simbols")
 	}
 	firtsRegexp, err := regexp.Compile(`(-|\+){0,1}\d+`)
 	if err != nil {
-		return "", fmt.Errorf("Regexp not compile: %w", err)
+		return "", fmt.Errorf("regexp not compile: %w", err)
 	}
 	arr := firtsRegexp.FindAllString(input, -1)
 	if len(arr) != 2 {
-		return "", fmt.Errorf("Want's two operand: %w", errorNotTwoOperands)
+		return "", fmt.Errorf("want's two operand: %w", errorNotTwoOperands)
 	}
 	firstOperand, err := strconv.Atoi(arr[0])
 	if err != nil {
-		return "", err
+		return "", fmt.Errorf("conversion first operand: %w", errorNotTwoOperands)
 	}
 	secondOperand, err := strconv.Atoi(arr[1])
 	if err != nil {
-		return "", err
+		return "", fmt.Errorf("conversion second operand: %w", errorNotTwoOperands)
 	}
 	output = strconv.Itoa(firstOperand + secondOperand)
-	return
+	return output, nil
+}
+
+func isNotNum(s string) bool {
+	for _, val := range s {
+		if val < '0' || val > '9' || val != '+' || val != '-' {
+			return false
+		}
+	}
+	return true
 }
