@@ -34,11 +34,11 @@ func StringSum(input string) (output string, err error) {
 	}
 	firstOperand, err := strconv.Atoi(arr[0])
 	if err != nil {
-		return "", fmt.Errorf("Error in first operand: %w", errorNotTwoOperands)
+		return "", err
 	}
 	secondOperand, err := strconv.Atoi(arr[1])
 	if err != nil {
-		return "", fmt.Errorf("Error in second operand: %w", errorNotTwoOperands)
+		return "", err
 	}
 	output = strconv.Itoa(firstOperand + secondOperand)
 	return
